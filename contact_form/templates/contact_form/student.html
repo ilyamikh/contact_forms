@@ -1,0 +1,30 @@
+{% extends 'contact_form/base.html' %}
+
+{% block content %}
+  <p>Child: {{ student }}</p>
+  <p>
+      <a href="{% url 'contact_form:view_form' student.id %}">View Emergency Contact/Parental Consent Form</a>
+  </p>
+  <p>Contacts:</p>
+  <p>
+      <a href="{% url 'contact_form:student_medical' student.id %}">Add/Edit Medical Information</a><br>
+      <a href="{% url 'contact_form:new_guardian' student.id %}">Add Parent/Guardian</a><br>
+      <a href="{% url 'contact_form:new_contact' student.id %}">Add Emergency Contact</a><br>
+      <a href="{% url 'contact_form:new_pickup_contact' student.id %}">Add Person to whom the Child May Be Released</a>
+      <br>
+      <a href="{% url 'contact_form:new_physician' student.id %}">Add Physician/Medical Care Provider</a><br>
+  </p>
+  <ul>
+      {% for adult in adults %}
+        <li>
+            <p>{{ adult }}</p>
+            <p>{{ adult.primary_number }}</p>
+        </li>
+      {% empty %}
+        <li>
+            There are no contacts for this child yet.
+        </li>
+      {% endfor %}
+  </ul>
+
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+
+  <p>Children</p>
+
+  <ul>
+      {% for student in students %}
+        <li>
+            <a href="{% url 'contact_form:student' student.id %}">{{ student }}</a>
+        </li>
+      {% empty %}
+        <li>No children have been added yet.</li>
+      {% endfor %}
+  </ul>
+
+  <a href="{% url 'contact_form:new_student' %}">Add a new Child:</a>
+
+{% endblock content %}

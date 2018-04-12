@@ -1,0 +1,14 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+
+  <p><a href="{% url 'contact_form:student' student.id %}">{{ student }}</a></p>
+
+  <p>Add Emergency Contact:</p>
+  <form action="{% url 'contact_form:new_contact' student.id %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="submit">Add Emergency Contact</button>
+  </form>
+
+{% endblock content %}
