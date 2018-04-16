@@ -1,0 +1,15 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+
+  <p><a href="{% url 'contact_form:student' student.id %}">{{ student }}</a></p>
+
+  <p>Adult Information:</p>
+
+  <form action="{% url 'contact_form:edit_adult' adult.id %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="submit">Save Changes</button>
+  </form>
+
+{% endblock content %}

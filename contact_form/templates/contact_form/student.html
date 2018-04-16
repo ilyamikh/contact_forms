@@ -18,7 +18,9 @@
   <ul>
       {% for adult in adults %}
         <li>
-            <p>{{ adult }}</p>
+            <p>{{ adult }}
+                <a href="{% url 'contact_form:edit_adult' adult.id %}">Edit</a>
+            </p>
             <p>{{ adult.primary_number }}</p>
         </li>
       {% empty %}

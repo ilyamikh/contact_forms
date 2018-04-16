@@ -36,6 +36,9 @@ urlpatterns = [
     # Page for adding a Physician
     path('new_physician/<int:student_id>/', views.new_physician, name='new_physician'),
 
+    # Page for editing an adult
+    path('edit_adult/<int:adult_id>/', views.edit_adult, name='edit_adult'),
+
     # Page for viewing the Emergency Contacts form
     path('view_form/<int:student_id>/', views.view_form, name='view_form'),
 ]

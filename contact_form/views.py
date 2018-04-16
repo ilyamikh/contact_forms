@@ -3,9 +3,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 
-from .models import Student
+from .models import Student, Adult
 from .forms import GuardianEntryForm, ContactEntryForm, PickupPersonEntryForm, PhysicianEntryForm
-from .forms import BasicChildInfoForm, ChildMedicalInfoForm, EditChildForm
+from .forms import BasicChildInfoForm, ChildMedicalInfoForm, EditChildForm, EditAdultForm
 
 def index(request):
     """The home page for all users"""
@@ -105,6 +105,25 @@ def new_guardian(request, student_id):
 
     context = {'student': student, 'form': form}
     return render(request, 'contact_form/new_guardian.html', context)
+
+
+def edit_adult(request, adult_id):
+    """Edit all adult fields."""
+    adult = Adult.objects.get(id=adult_id)
+    student = adult.child
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current student.
+        form = EditAdultForm(instance=adult)
+    else:
+        # POST data submitted, process data.
+        form = EditAdultForm(instance=adult, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('contact_form:student', args=[student.id]))
+
+    context = {'adult': adult, 'student': student, 'form': form}
+    return render(request, 'contact_form/edit_adult.html', context)
 
 
 def new_contact(request, student_id):

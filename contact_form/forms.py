@@ -92,6 +92,10 @@ class GuardianEntryForm(forms.ModelForm):
                    }
 
 
+class EditAdultForm(GuardianEntryForm):
+    """Form to edit all adult fields."""
+
+
 class ContactEntryForm(forms.ModelForm):
     """Form to add an emergency contact."""
     class Meta:
