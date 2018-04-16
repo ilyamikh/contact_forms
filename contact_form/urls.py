@@ -39,6 +39,12 @@ urlpatterns = [
     # Page for editing an adult
     path('edit_adult/<int:adult_id>/', views.edit_adult, name='edit_adult'),
 
+    # Limk for removing an adult
+    path('remove_adult/<int:adult_id>/', views.remove_adult, name='remove_adult'),
+
+    # Link for removing a student
+    path('remove_student/<int:student_id>/', views.remove_student, name='remove_student'),
+
     # Page for viewing the Emergency Contacts form
     path('view_form/<int:student_id>/', views.view_form, name='view_form'),
 ]

@@ -126,6 +126,21 @@ def edit_adult(request, adult_id):
     return render(request, 'contact_form/edit_adult.html', context)
 
 
+def remove_adult(request, adult_id):
+    adult = Adult.objects.get(id=adult_id)
+    student = adult.child
+    adult.delete()
+
+    return HttpResponseRedirect(reverse('contact_form:student', args=[student.id]))
+
+
+def remove_student(request, student_id):
+    student = Student.objects.get(id=student_id)
+    student.delete()
+
+    return HttpResponseRedirect(reverse('contact_form:students'))
+
+
 def new_contact(request, student_id):
     """Add a Student's emergency contact"""
     student = Student.objects.get(id=student_id)
