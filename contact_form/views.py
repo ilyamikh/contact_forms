@@ -4,8 +4,8 @@ from django.urls import reverse
 
 
 from .models import Student
-from .forms import BasicChildInfoForm, GuardianEntryForm, ContactEntryForm, PickupPersonEntryForm, PhysicianEntryForm, ChildMedicalInfoForm
-
+from .forms import GuardianEntryForm, ContactEntryForm, PickupPersonEntryForm, PhysicianEntryForm
+from .forms import BasicChildInfoForm, ChildMedicalInfoForm, EditChildForm
 
 def index(request):
     """The home page for all users"""
@@ -67,6 +67,24 @@ def student_medical(request, student_id):
 
     context = {'student': student, 'form': form}
     return render(request, 'contact_form/student_medical.html', context)
+
+
+def edit_student(request, student_id):
+    """Edit all student fields."""
+    student = Student.objects.get(id=student_id)
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current student.
+        form = EditChildForm(instance=student)
+    else:
+        # POST data submitted, process data.
+        form = EditChildForm(instance=student, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('contact_form:student', args=[student_id]))
+
+    context = {'student': student, 'form': form}
+    return render(request, 'contact_form/edit_student.html', context)
 
 
 def new_guardian(request, student_id):

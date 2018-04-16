@@ -21,6 +21,9 @@ urlpatterns = [
     # Page for adding student medical info
     path('student_medical/<int:student_id>/', views.student_medical, name='student_medical'),
 
+    # Page for editing all student into
+    path('edit_student/<int:student_id>/', views.edit_student, name='edit_student'),
+
     # Page for adding a new Guardian
     path('new_guardian/<int:student_id>/', views.new_guardian, name='new_guardian'),
 

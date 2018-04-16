@@ -3,7 +3,8 @@
 {% block content %}
   <p>Child: {{ student }}</p>
   <p>
-      <a href="{% url 'contact_form:view_form' student.id %}">View Emergency Contact/Parental Consent Form</a>
+      <a href="{% url 'contact_form:view_form' student.id %}">View Emergency Contact/Parental Consent Form</a><br>
+      <a href="{% url 'contact_form:edit_student' student.id %}">Edit Student Info</a>
   </p>
   <p>Contacts:</p>
   <p>

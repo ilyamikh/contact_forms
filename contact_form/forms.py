@@ -16,6 +16,7 @@ class BasicChildInfoForm(forms.ModelForm):
                   }
         widgets = {
                 'first_name': forms.TextInput(attrs={'required': True}),
+                'last_name': forms.TextInput(attrs={'required': True}),
                 'date_of_birth': forms.DateInput(attrs={'required': True}),
                    }
 
@@ -35,6 +36,38 @@ class ChildMedicalInfoForm(forms.ModelForm):
             'health_insurance': 'Health Insurance Coverage for Child or Medical Assistance Benefits',
             'policy_number': 'Policy Number (Required)',
         }
+
+
+class EditChildForm(forms.ModelForm):
+    """Form to edit a Child, all fields, including status and ID."""
+    class Meta:
+        model = Student
+        fields = [
+            'internal_id', 'is_active',
+            'first_name', 'last_name', 'date_of_birth', 'address',
+            'disabilities', 'allergies', 'emergency_medical_info', 'medications', 'additional_info',
+            'health_insurance', 'policy_number',
+        ]
+        labels = {
+            'internal_id': 'Student ID',
+            'is_active': 'Active',
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'date_of_birth': 'Date of Birth',
+            'address': 'Address',
+            'disabilities': 'Special Disabilities (if any)',
+            'allergies': 'Allergies (Including Medication Reaction)',
+            'emergency_medical_info': 'Medical or Dietary Information Necessary in an Emergency Situation',
+            'medications': 'Medication, Special Conditions',
+            'additional_info': 'Additional Information on Special Needs of Child',
+            'health_insurance': 'Health Insurance Coverage for Child or Medical Assistance Benefits',
+            'policy_number': 'Policy Number (Required)',
+        }
+        widgets = {
+                'first_name': forms.TextInput(attrs={'required': True}),
+                'last_name': forms.TextInput(attrs={'required': True}),
+                'date_of_birth': forms.DateInput(attrs={'required': True}),
+                   }
 
 
 class GuardianEntryForm(forms.ModelForm):
