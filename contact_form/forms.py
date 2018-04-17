@@ -7,11 +7,18 @@ class BasicChildInfoForm(forms.ModelForm):
     """Non-optional fields to create a Student"""
     class Meta:
         model = Student
-        fields = ['first_name', 'last_name', 'date_of_birth', 'address', 'internal_id', ]
+        fields = [
+            'first_name', 'last_name', 'date_of_birth',
+            'street', 'city', 'state', 'zip',
+            'internal_id',
+        ]
         labels = {'first_name': 'First Name',
                   'last_name': 'Last Name',
                   'date_of_birth': 'Date of Birth',
-                  'address': 'Address',
+                  'street': 'Street Address',
+                  'city': 'City',
+                  'state': 'State',
+                  'zip': 'Zip Code',
                   'internal_id': 'Student ID',
                   }
         widgets = {
@@ -44,7 +51,8 @@ class EditChildForm(forms.ModelForm):
         model = Student
         fields = [
             'internal_id', 'is_active',
-            'first_name', 'last_name', 'date_of_birth', 'address',
+            'first_name', 'last_name', 'date_of_birth',
+            'street', 'city', 'state', 'zip',
             'disabilities', 'allergies', 'emergency_medical_info', 'medications', 'additional_info',
             'health_insurance', 'policy_number',
         ]
@@ -54,7 +62,10 @@ class EditChildForm(forms.ModelForm):
             'first_name': 'First Name',
             'last_name': 'Last Name',
             'date_of_birth': 'Date of Birth',
-            'address': 'Address',
+            'street': 'Street Address',
+            'city': 'City',
+            'state': 'State',
+            'zip': 'Zip Code',
             'disabilities': 'Special Disabilities (if any)',
             'allergies': 'Allergies (Including Medication Reaction)',
             'emergency_medical_info': 'Medical or Dietary Information Necessary in an Emergency Situation',
@@ -74,14 +85,18 @@ class GuardianEntryForm(forms.ModelForm):
     """Form to add a parent/legal guardian."""
     class Meta:
         model = Adult
-        fields = ['relationship', 'first_name', 'last_name', 'address',
+        fields = ['relationship', 'first_name', 'last_name',
+                  'street', 'city', 'state', 'zip',
                   'primary_number', 'secondary_number', 'email_address',
                   'business_name', 'work_number',
                   ]
         labels = {'relationship': 'Relationship to Child',
                   'first_name': 'First Name',
                   'last_name': 'Last Name',
-                  'address': 'Address',
+                  'street': 'Street Address',
+                  'city': 'City',
+                  'state': 'State',
+                  'zip': 'Zip Code',
                   'primary_number': 'Primary Phone Number',
                   'secondary_number': 'Secondary Phone Number',
                   'email_address': 'Email Address',
@@ -119,13 +134,17 @@ class PickupPersonEntryForm(forms.ModelForm):
     class Meta:
         model = Adult
         fields = [
-            'relationship', 'first_name', 'last_name', 'address', 'primary_number',
+            'relationship', 'first_name', 'last_name', 'primary_number',
+            'street', 'city', 'state', 'zip',
         ]
         labels = {
             'relationship': 'Relationship to Child',
             'first_name': 'First Name',
             'last_name': 'Last Name',
-            'address': 'Address',
+            'street': 'Street Address',
+            'city': 'City',
+            'state': 'State',
+            'zip': 'Zip Code',
             'primary_number': 'Primary Phone Number',
         }
         widgets = {
@@ -138,14 +157,19 @@ class PhysicianEntryForm(forms.ModelForm):
     class Meta:
         model = Adult
         fields = [
-            'relationship', 'first_name', 'last_name', 'business_name', 'address', 'primary_number',
+            'relationship', 'first_name', 'last_name', 'business_name',
+            'street', 'city', 'state', 'zip',
+            'primary_number',
         ]
         labels = {
             'relationship': 'Relationship to Child',
             'first_name': 'First Name',
             'last_name': 'Last Name',
             'business_name': 'Medical Care Provider',
-            'address': 'Address',
+            'street': 'Street Address',
+            'city': 'City',
+            'state': 'State',
+            'zip': 'Zip Code',
             'primary_number': 'Primary Phone Number',
         }
         widgets = {
