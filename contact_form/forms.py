@@ -109,6 +109,8 @@ class GuardianEntryForm(forms.ModelForm):
 
 class EditAdultForm(GuardianEntryForm):
     """Form to edit all adult fields."""
+    GuardianEntryForm.Meta.fields.append('is_contact')
+    GuardianEntryForm.Meta.labels['is_contact'] = 'Add this Person as Emergency Contact'
 
 
 class ContactEntryForm(forms.ModelForm):
@@ -135,7 +137,7 @@ class PickupPersonEntryForm(forms.ModelForm):
         model = Adult
         fields = [
             'relationship', 'first_name', 'last_name', 'primary_number',
-            'street', 'city', 'state', 'zip',
+            'street', 'city', 'state', 'zip', 'is_contact'
         ]
         labels = {
             'relationship': 'Relationship to Child',
@@ -146,6 +148,7 @@ class PickupPersonEntryForm(forms.ModelForm):
             'state': 'State',
             'zip': 'Zip Code',
             'primary_number': 'Primary Phone Number',
+            'is_contact': 'Add this Person as Emergency Contact',
         }
         widgets = {
             'relationship': forms.Select(),

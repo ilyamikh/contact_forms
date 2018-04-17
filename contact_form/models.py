@@ -49,6 +49,7 @@ class Adult(models.Model):
         ('MP', 'Physician/Medical Care Provider'),
     )
     relationship = models.CharField(max_length=2, choices=RELATIONSHIP_CHOICES, default='MO')
+    is_contact = models.BooleanField(default=True)  # switch mostly for pickup persons
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 

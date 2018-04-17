@@ -59,7 +59,7 @@
                 <td><b>Phone Number when Child is in Care</b></td>
             </tr>
             {% for adult in adults %}
-            {% if adult.relationship == "EC" or adult.relationship == "PP"%}
+            {% if adult.relationship == "EC" or adult.relationship == "PP"  and adult.is_contact %}
             <tr>
                 <td colspan="2">{{ adult.first_name }} {{ adult.last_name }}</td>
                 <td>{{ adult.primary_number }}</td>

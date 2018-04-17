@@ -7,6 +7,7 @@ from .models import Student, Adult
 from .forms import GuardianEntryForm, ContactEntryForm, PickupPersonEntryForm, PhysicianEntryForm
 from .forms import BasicChildInfoForm, ChildMedicalInfoForm, EditChildForm, EditAdultForm
 
+
 def index(request):
     """The home page for all users"""
     return render(request, 'contact_form/index.html')
@@ -196,6 +197,7 @@ def new_physician(request, student_id):
         if form.is_valid():
             new_physician = form.save(commit=False)
             new_physician.child = student
+            new_physician.is_contact = False
             new_physician.save()
             return HttpResponseRedirect(reverse('contact_form:student', args=[student_id]))
 
