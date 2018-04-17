@@ -6,15 +6,15 @@
         <table style="width:100%">
             <!--Child Name and Address-->
             <tr>
-                <td width="75%" colspan="2">Child's Name</td>
-                <td>Birthdate</td>
+                <td width="75%" colspan="2"><b>Child's Name</b></td>
+                <td><b>Birthdate</b></td>
             </tr>
             <tr>
                 <td colspan="2">{{ student }}</td>
                 <td>{{ student.date_of_birth }}</td>
             </tr>
             <tr>
-                <td colspan="3">Address</td>
+                <td colspan="3"><b>Address</b></td>
             </tr>
             <tr>
                 <td colspan="3">{{ student.get_mailing_address }}</td>
@@ -24,8 +24,8 @@
             {% for adult in adults %}
             {% if adult.relationship == "MO" or adult.relationship == "FA" or adult.relationship == "LG" %}
             <tr>
-                <td colspan="2">{{ adult.get_relationship_display }}'s Name</td>
-                <td>Home Number</td>
+                <td colspan="2"><b>{{ adult.get_relationship_display }}'s Name</b></td>
+                <td><b>Home Number</b></td>
             </tr>
 
             <tr>
@@ -33,17 +33,17 @@
                 <td>{{ adult.primary_number }}</td>
             </tr>
             <tr>
-                <td colspan="2">Address</td>
-                <td>Cell Number</td>
+                <td colspan="2"><b>Address</b></td>
+                <td><b>Cell Number</b></td>
             </tr>
             <tr>
                 <td colspan="2">{% if not adult.street %}NONE{% else %}{{ adult.get_mailing_address }}{% endif %}</td>
                 <td>{% if not adult.secondary_number %}NONE{% endif %}{{ adult.secondary_number }}</td>
             </tr>
             <tr>
-                <td width="50%">Business Name</td>
-                <td width="25%">Email Address</td>
-                <td width="25%">Work Number</td>
+                <td width="50%"><b>Business Name</b></td>
+                <td width="25%"><b>Email Address</b></td>
+                <td width="25%"><b>Work Number</b></td>
             </tr>
             <tr>
                 <td>{% if not adult.business_name %}NONE{% endif %}{{ adult.business_name }}</td>
@@ -55,11 +55,11 @@
 
             <!--Emergency contact persons-->
             <tr>
-                <td colspan="2">Emergency Contact Person(s)</td>
-                <td>Phone Number when Child is in Care</td>
+                <td colspan="2"><b>Emergency Contact Person(s)</b></td>
+                <td><b>Phone Number when Child is in Care</b></td>
             </tr>
             {% for adult in adults %}
-            {% if adult.relationship == "EC" %}
+            {% if adult.relationship == "EC" or adult.relationship == "PP"%}
             <tr>
                 <td colspan="2">{{ adult.first_name }} {{ adult.last_name }}</td>
                 <td>{{ adult.primary_number }}</td>
@@ -69,9 +69,9 @@
 
             <!--Persons to whom child may be released-->
             <tr>
-                <td width="50%">Person(s) to whom Child May be Released</td>
-                <td width="25%">Address</td>
-                <td>Phone Number</td>
+                <td width="50%"><b>Person(s) to whom Child May be Released</b></td>
+                <td width="25%"><b>Address</b></td>
+                <td><b>Phone Number</b></td>
             </tr>
             {% for adult in adults %}
             {% if adult.relationship == "PP" %}
@@ -87,15 +87,15 @@
             {% for adult in adults %}
             {% if adult.relationship == "MP" %}
             <tr>
-                <td colspan="2">Name of Child's Physician/Medical Care Provider</td>
-                <td>Phone Number</td>
+                <td colspan="2"><b>Name of Child's Physician/Medical Care Provider</b></td>
+                <td><b>Phone Number</b></td>
             </tr>
             <tr>
                 <td colspan="2">{{ adult.first_name }} {{ adult.last_name }} {{ adult.business_name }}</td>
                 <td>{{ adult.primary_number }}</td>
             </tr>
             <tr>
-                <td>Provider Address</td>
+                <td><b>Provider Address</b></td>
                 <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
@@ -107,30 +107,30 @@
 
             <!-- Child Medical Info -->
             <tr>
-                <td>Special Disabilities (If Any)</td>
-                <td colspan="2">Allergies (Including Medication Reactions)</td>
+                <td><b>Special Disabilities (If Any)</b></td>
+                <td colspan="2"><b>Allergies (Including Medication Reactions)</b></td>
             </tr>
             <tr>
                 <td>{% if not student.disabilities %}NONE{% endif %}{{ student.disabilities }}</td>
                 <td colspan="2">{% if not student.allergies %}NONE{% endif %}{{ student.allergies }}</td>
             </tr>
             <tr>
-                <td>Medical/Dietary Info Necessary in Emergency Situation</td>
-                <td colspan="2">Medications/Special Conditions</td>
+                <td><b>Medical/Dietary Info Necessary in Emergency Situation</b></td>
+                <td colspan="2"><b>Medications/Special Conditions</b></td>
             </tr>
             <tr>
                 <td>{% if not student.emergency_medical_info %}NONE{% endif %}{{ student.emergency_medical_info }}</td>
                 <td colspan="2">{% if not student.medications %}NONE{% endif %}{{ student.medications }}</td>
             </tr>
             <tr>
-                <td colspan="3">Additional Information on Special Needs of Child</td>
+                <td colspan="3"><b>Additional Information on Special Needs of Child</b></td>
             </tr>
             <tr>
                 <td colspan="3">{% if not student.additional_info %}NONE{% endif %}{{ student.additional_info }}</td>
             </tr>
             <tr>
-                <td colspan="2">Health Insurance Coverage for Child or Medical Assistance Benefits</td>
-                <td>Policy Number (Required)</td>
+                <td colspan="2"><b>Health Insurance Coverage for Child or Medical Assistance Benefits</b></td>
+                <td><b>Policy Number (Required)</b></td>
             </tr>
             <tr>
                 <td colspan="2">{% if not student.health_insurance %}NONE{% endif %}{{ student.health_insurance }}</td>
@@ -141,40 +141,40 @@
                 <td colspan="3" align="center" bgcolor="black"><font color="white"><b>Parent Signature is Required for Each Item Below to Indicate Parental Consent</b></font></td>
             </tr>
             <tr>
-                <td>Obtaining Emergency Medical Care</td>
-                <td colspan="2">Admin. of Minor Fist Aid Procedures</td>
+                <td><b>Obtaining Emergency Medical Care</b></td>
+                <td colspan="2"><b>Admin. of Minor Fist Aid Procedures</b></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
-                <td>Walks and Trips</td>
-                <td colspan="2">Swimming</td>
+                <td><b>Walks and Trips</b></td>
+                <td colspan="2"><b>Swimming</b></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
-                <td>Transportation by Facility</td>
-                <td colspan="2">Wading</td>
+                <td><b>Transportation by Facility</b></td>
+                <td colspan="2"><b>Wading</b></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
-                <td colspan="2">Signature of Parent or Guardian</td>
-                <td>Date</td>
+                <td colspan="2"><b>Signature of Parent or Guardian</b></td>
+                <td><b>Date </b>{% now "F jS Y" %}</td>
             </tr>
             <tr>
                 <td colspan="2">&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td colspan="2">Signature of Parent or Guardian</td>
-                <td>Date</td>
+                <td colspan="2"><b>Signature of Parent or Guardian</b></td>
+                <td><b>Date </b>{% now "F jS Y" %}</td>
             </tr>
             <tr>
                 <td colspan="2">&nbsp;</td>

@@ -44,8 +44,8 @@ def new_student(request):
         # POST data submited; process data.
         form = BasicChildInfoForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('contact_form:students'))
+            student = form.save()
+            return HttpResponseRedirect(reverse('contact_form:new_guardian', args=[student.id]))
 
     context = {'form': form}
     return render(request, 'contact_form/new_student.html', context)
@@ -93,7 +93,9 @@ def new_guardian(request, student_id):
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
-        form = GuardianEntryForm()
+        form = GuardianEntryForm(initial={
+            'street': student.street, 'city': student.city, 'state': student.state, 'zip': student.zip,
+        })
     else:
         # POST data submitted; process data.
         form = GuardianEntryForm(data=request.POST)
