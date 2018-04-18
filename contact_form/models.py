@@ -61,8 +61,13 @@ class Adult(models.Model):
     primary_number = models.CharField(max_length=20)  # is storing phone numbers as text ok?
     secondary_number = models.CharField(max_length=20, blank=True)
     email_address = models.EmailField(blank=True)  # why reinvent the wheel, right
+
     business_name = models.CharField(max_length=200, blank=True)
-    work_number = models.CharField(max_length=20, blank=True)  # consider removing these defaults
+    work_number = models.CharField(max_length=20, blank=True)
+    bus_street = models.CharField(max_length=300, blank=True)
+    bus_city = models.CharField(max_length=100, blank=True)
+    bus_state = models.CharField(max_length=2, blank=True)
+    bus_zip = models.CharField(max_length=9, blank=True)
 
     def __str__(self):
         """Return the string representation of the model."""
@@ -71,3 +76,7 @@ class Adult(models.Model):
     def get_mailing_address(self):
         """Returns a string of the complete mailing address."""
         return self.street + ', ' + self.city + ', ' + self.state + ' ' + self.zip
+
+    def get_business_address(self):
+        """Returns a string of the complete business address."""
+        return self.bus_street + ', ' + self.bus_city + ', ' + self.bus_state + ' ' + self.bus_zip

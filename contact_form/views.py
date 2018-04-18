@@ -1,3 +1,5 @@
+import random, datetime, time
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -40,9 +42,9 @@ def new_student(request):
     """Add a new Student."""
     if request.method != 'POST':
         # No data submitted; create a blank form.
-        form = BasicChildInfoForm()
+        form = BasicChildInfoForm(initial={'internal_id': generate_id()})
     else:
-        # POST data submited; process data.
+        # POST data submitted; process data.
         form = BasicChildInfoForm(data=request.POST)
         if form.is_valid():
             student = form.save()
@@ -50,6 +52,42 @@ def new_student(request):
 
     context = {'form': form}
     return render(request, 'contact_form/new_student.html', context)
+
+
+def user_new_student_initial(request):
+    """User adds a new student for the first time."""
+    if request.method != 'POST':
+        # No data submitted, create a blank form
+        form = BasicChildInfoForm(initial={'internal_id': generate_id()})
+    else:
+        # POST data submitted; process data.
+        form = BasicChildInfoForm(data=request.POST)
+        if form.is_valid():
+            student = form.save()
+            # Take the user to enter student medical info next
+            return HttpResponseRedirect(reverse('contact_form:user_student_medical_initial', args=[student.id]))
+
+    context = {'form': form}
+    return render(request, 'contact_form/user_initial/user_new_student_initial.html')
+
+
+def user_student_medical_initial(request, student_id):
+    """User enters sutend medical info for the first time."""
+    student = Student.objects.get(id=student_id)
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current student.
+        form = ChildMedicalInfoForm(instance=student)
+    else:
+        # POST data submitted; process data.
+        form = ChildMedicalInfoForm(instance=student, data=request.POST)
+        if form.is_valid():
+            form.save()
+            # Take the user to enter the guardian info next
+            return HttpResponseRedirect(reverse('contact_form:user_new_guardian_initial', args=[student_id]))
+
+    context = {'student': student, 'form': form}
+    return render(request, 'contact_form/user_initial/user_student_medical_initial.html', context)
 
 
 def student_medical(request, student_id):
@@ -150,7 +188,7 @@ def new_contact(request, student_id):
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
-        form = ContactEntryForm()
+        form = ContactEntryForm(initial={'relationship': 'EC'})
     else:
         # POST data submitted; process data.
         form = ContactEntryForm(data=request.POST)
@@ -170,7 +208,7 @@ def new_pickup_contact(request, student_id):
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
-        form = PickupPersonEntryForm()
+        form = PickupPersonEntryForm(initial={'relationship': 'PP'})
     else:
         # POST data submitted; process data.
         form = PickupPersonEntryForm(data=request.POST)
@@ -190,7 +228,7 @@ def new_physician(request, student_id):
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
-        form = PhysicianEntryForm()
+        form = PhysicianEntryForm(initial={'relationship': 'MP'})
     else:
         # POST data submitted; process data.
         form = PhysicianEntryForm(data=request.POST)
@@ -198,8 +236,40 @@ def new_physician(request, student_id):
             new_physician = form.save(commit=False)
             new_physician.child = student
             new_physician.is_contact = False
+            new_physician.work_number = new_physician.primary_number  # To keep the form consistent
             new_physician.save()
             return HttpResponseRedirect(reverse('contact_form:student', args=[student_id]))
 
     context = {'student': student, 'form': form}
     return render(request, 'contact_form/new_physician.html', context)
+
+
+def generate_id():
+    """Generates a 6-digit ID with the last 2 digits of the current year as the first 2 digits of ID"""
+    year = get_year()
+    lower = year * 10000
+    upper = lower + 9999
+    id = random.randint(lower, upper)
+
+    while is_used(id):
+        id = random.randint(lower, upper)
+
+    return id
+
+
+def is_used(id):
+    """Checks if the ID has already been used"""
+    id_list = []
+    students = Student.objects.all()
+    for student in students:
+        id_list.append(student.internal_id)
+
+    if id in id_list:
+        return True
+    else:
+        return False
+
+
+def get_year():
+    """Returns integer of last two digits of the current year"""
+    return int(datetime.datetime.fromtimestamp(time.time()).strftime('%Y')[2:])

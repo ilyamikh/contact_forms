@@ -89,6 +89,7 @@ class GuardianEntryForm(forms.ModelForm):
                   'street', 'city', 'state', 'zip',
                   'primary_number', 'secondary_number', 'email_address',
                   'business_name', 'work_number',
+                  'bus_street', 'bus_city', 'bus_state', 'bus_zip',
                   ]
         labels = {'relationship': 'Relationship to Child',
                   'first_name': 'First Name',
@@ -102,6 +103,10 @@ class GuardianEntryForm(forms.ModelForm):
                   'email_address': 'Email Address',
                   'business_name': 'Business Name',
                   'work_number': 'Work Number',
+                  'bus_street': 'Street Address',
+                  'bus_city': 'City',
+                  'bus_state': 'State',
+                  'bus_zip': 'Zip Code',
                   }
         widgets = {'relationship': forms.Select(),
                    }
@@ -161,18 +166,18 @@ class PhysicianEntryForm(forms.ModelForm):
         model = Adult
         fields = [
             'relationship', 'first_name', 'last_name', 'business_name',
-            'street', 'city', 'state', 'zip',
+            'bus_street', 'bus_city', 'bus_state', 'bus_zip',
             'primary_number',
         ]
         labels = {
             'relationship': 'Relationship to Child',
             'first_name': 'First Name',
             'last_name': 'Last Name',
-            'business_name': 'Medical Care Provider',
-            'street': 'Street Address',
-            'city': 'City',
-            'state': 'State',
-            'zip': 'Zip Code',
+            'business_name': 'Medical Care Provider Business Name',
+            'bus_street': 'Street Address',
+            'bus_city': 'City',
+            'bus_state': 'State',
+            'bus_zip': 'Zip Code',
             'primary_number': 'Primary Phone Number',
         }
         widgets = {
