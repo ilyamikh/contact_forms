@@ -4,6 +4,11 @@
   <h3>Emergency Contact</h3>
   <p>Please enter the information on the person who can be contacted in an emergency.</p>
   <p>If you have previously checked "add this person as emergency contact", you do not need to list them again.</p>
+  <p>
+      <a href="{% url 'contact_form:user_new_doctor_initial' student.id %}">
+          If all the pickup persons you listed are also marked as emergency contacts, you may skip this step.
+      </a>
+  </p>
   <form action="{% url 'contact_form:user_new_contact_initial' student.id %}" method="post">
       {% csrf_token %}
       {{ form.as_p }}
