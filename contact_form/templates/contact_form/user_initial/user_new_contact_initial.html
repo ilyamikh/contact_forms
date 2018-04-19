@@ -1,0 +1,15 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+  <h3>Emergency Contact</h3>
+  <p>Please enter the information on the person who can be contacted in an emergency.</p>
+  <p>If you have previously checked "add this person as emergency contact", you do not need to list them again.</p>
+  <form action="{% url 'contact_form:user_new_contact_initial' student.id %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="add_another">Save and Add another Contact</button>
+      <button name="submit">Save and Continue</button>
+  </form>
+  <p><a href="{% url 'contact_form:user_new_doctor_initial' student.id %}">Skip to Next Step</a></p>
+
+{% endblock content %}

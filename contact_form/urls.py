@@ -53,11 +53,36 @@ urlpatterns = [
 
     # Child medical info page
     path(
-        '/user_initial/user_student_medical_initial/',
+        '/user_initial/user_student_medical_initial/<int:student_id>/',
         views.user_student_medical_initial,
         name='user_student_medical_initial'
     ),
 
     # New Guardian Page
-    path('user_initial/user_new_guardian_initial/', views.user_new_guardian_initial, name='user_new_guardian_initial'),
+    path(
+        'user_initial/user_new_guardian_initial/<int:student_id>/',
+        views.user_new_guardian_initial,
+        name='user_new_guardian_initial'
+    ),
+
+    # New Pickup Person Page
+    path(
+        'user_initial/user_new_pickup_person_initial/<int:student_id>/',
+        views.user_new_pickup_person_initial,
+        name='user_new_pickup_person_initial'
+    ),
+
+    # New Contact Page
+    path(
+        'user_initial/user_new_contact_initial/<int:student_id>/',
+        views.user_new_contact_initial,
+        name='user_new_contact_initial'
+    ),
+
+    # New Physician Page
+    path(
+        'user_initial/user_new_doctor_initial/<int:student_id>/',
+        views.user_new_doctor_initial,
+        name='user_new_doctor_initial'
+    ),
 ]

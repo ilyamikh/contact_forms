@@ -14,7 +14,7 @@ class BasicChildInfoForm(forms.ModelForm):
         ]
         labels = {'first_name': 'First Name',
                   'last_name': 'Last Name',
-                  'date_of_birth': 'Date of Birth',
+                  'date_of_birth': 'Date of Birth MM/DD/YYYY',
                   'street': 'Street Address',
                   'city': 'City',
                   'state': 'State',
@@ -35,19 +35,22 @@ class UserBasicChildInfo(forms.ModelForm):
         fields = [
             'first_name', 'last_name', 'date_of_birth',
             'street', 'city', 'state', 'zip',
+            'internal_id',
         ]
         labels = {'first_name': 'First Name',
                   'last_name': 'Last Name',
-                  'date_of_birth': 'Date of Birth',
+                  'date_of_birth': 'Date of Birth MM/DD/YYYY',
                   'street': 'Street Address',
                   'city': 'City',
                   'state': 'State',
                   'zip': 'Zip Code',
+                  'internal_id': 'Student ID',
                   }
         widgets = {
                 'first_name': forms.TextInput(attrs={'required': True}),
                 'last_name': forms.TextInput(attrs={'required': True}),
                 'date_of_birth': forms.DateInput(attrs={'required': True}),
+                'internal_id': forms.HiddenInput()
                    }
 
 
@@ -65,6 +68,10 @@ class ChildMedicalInfoForm(forms.ModelForm):
             'additional_info': 'Additional Information on Special Needs of Child',
             'health_insurance': 'Health Insurance Coverage for Child or Medical Assistance Benefits',
             'policy_number': 'Policy Number (Required)',
+        }
+        widgets = {
+            'health_insurance': forms.TextInput(attrs={'required': True}),
+            'policy_number': forms.TextInput(attrs={'required': True}),
         }
 
 

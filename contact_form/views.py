@@ -69,7 +69,7 @@ def user_new_student_initial(request):
             return HttpResponseRedirect(reverse('contact_form:user_student_medical_initial', args=[student.id]))
 
     context = {'form': form}
-    return render(request, 'contact_form/user_initial/user_new_student_initial.html')
+    return render(request, 'contact_form/user_initial/user_new_student_initial.html', context)
 
 
 def user_student_medical_initial(request, student_id):
@@ -103,14 +103,91 @@ def user_new_guardian_initial(request, student_id):
     else:
         # POST data submitted; process data.
         form = GuardianEntryForm(data=request.POST)
-        if form.is_valid():
+        if form.is_valid() and "submit" in request.POST:
             new_guardian = form.save(commit=False)
             new_guardian.child = student
             new_guardian.save()
-            return HttpResponseRedirect(reverse('contact_form:student', args=[student_id]))
+            return HttpResponseRedirect(reverse('contact_form:user_new_pickup_person_initial', args=[student_id]))
+        elif form.is_valid() and "add_another" in request.POST:
+            new_guardian = form.save(commit=False)
+            new_guardian.child = student
+            new_guardian.save()
+            return HttpResponseRedirect(reverse('contact_form:user_new_guardian_initial', args=[student_id]))
 
     context = {'student': student, 'form': form}
     return render(request, 'contact_form/user_initial/user_new_guardian_initial.html', context)
+
+
+def user_new_pickup_person_initial(request, student_id):
+    """Users enters the initial pickup person."""
+    student = Student.objects.get(id=student_id)
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = PickupPersonEntryForm(initial={'relationship': 'PP'})
+    else:
+        # POST data submitted; process data.
+        form = PickupPersonEntryForm(data=request.POST)
+        if form.is_valid() and "submit" in request.POST:
+            new_pickup_contact = form.save(commit=False)
+            new_pickup_contact.child = student
+            new_pickup_contact.save()
+            return HttpResponseRedirect(reverse('contact_form:user_new_contact_initial', args=[student_id]))
+        elif form.is_valid() and "add_another" in request.POST:
+            new_pickup_contact = form.save(commit=False)
+            new_pickup_contact.child = student
+            new_pickup_contact.save()
+            return HttpResponseRedirect(reverse('contact_form:user_new_pickup_person_initial', args=[student_id]))
+
+    context = {'student': student, 'form': form}
+    return render(request, 'contact_form/user_initial/user_new_pickup_person_initial.html', context)
+
+
+def user_new_contact_initial(request, student_id):
+    """User enters the initial emergency contact."""
+    student = Student.objects.get(id=student_id)
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = ContactEntryForm(initial={'relationship': 'EC'})
+    else:
+        # POST data submitted; process data.
+        form = ContactEntryForm(data=request.POST)
+        if form.is_valid() and "submit" in request.POST:
+            new_contact = form.save(commit=False)
+            new_contact.child = student
+            new_contact.save()
+            return HttpResponseRedirect(reverse('contact_form:user_new_doctor_initial', args=[student_id]))
+        elif form.is_valid() and "add_another" in request.POST:
+            new_contact = form.save(commit=False)
+            new_contact.child = student
+            new_contact.save()
+            return HttpResponseRedirect(reverse('contact_form:user_new_contact_initial', args=[student_id]))
+
+    context = {'student': student, 'form': form}
+    return render(request, 'contact_form/user_initial/user_new_contact_initial.html', context)
+
+
+def user_new_doctor_initial(request, student_id):
+    """User enters doctor info for the first time."""
+    student = Student.objects.get(id=student_id)
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = PhysicianEntryForm(initial={'relationship': 'MP'})
+    else:
+        # POST data submitted; process data.
+        form = PhysicianEntryForm(data=request.POST)
+        if form.is_valid():
+            new_physician = form.save(commit=False)
+            new_physician.child = student
+            new_physician.is_contact = False
+            new_physician.work_number = new_physician.primary_number  # To keep the form consistent
+            new_physician.save()
+            return HttpResponseRedirect(reverse('contact_form:view_form', args=[student_id]))
+
+    context = {'student': student, 'form': form}
+    return render(request, 'contact_form/user_initial/user_new_doctor_initial.html', context)
 
 
 def student_medical(request, student_id):

@@ -1,0 +1,14 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+  <h3>Person to Whom the Child May be Released</h3>
+  <p>Please enter the information on the person who can pick up the child other than the parents or guardians.</p>
+  <p>Check the box if you would like this person to also be an emergency contact.</p>
+  <form action="{% url 'contact_form:user_new_pickup_person_initial' student.id %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="add_another">Save and Add another Person</button>
+      <button name="submit">Save and Continue</button>
+  </form>
+
+{% endblock content %}
