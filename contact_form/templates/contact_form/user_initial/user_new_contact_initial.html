@@ -4,10 +4,8 @@
   <h3>Emergency Contact</h3>
   <p>Please enter the information on the person who can be contacted in an emergency.</p>
   <p>If you have previously checked "add this person as emergency contact", you do not need to list them again.</p>
-  <p>
-      <a href="{% url 'contact_form:user_new_doctor_initial' student.id %}">
-          If all the pickup persons you listed are also marked as emergency contacts, you may skip this step.
-      </a>
+  <p>If all the pickup persons you listed are also marked as emergency contacts,
+      <a href="{% url 'contact_form:user_new_doctor_initial' student.id %}">you may skip this step.</a>
   </p>
   <form action="{% url 'contact_form:user_new_contact_initial' student.id %}" method="post">
       {% csrf_token %}
@@ -15,6 +13,9 @@
       <button name="add_another">Save and Add another Contact</button>
       <button name="submit">Save and Continue</button>
   </form>
-  <p><a href="{% url 'contact_form:user_new_doctor_initial' student.id %}">Skip to Next Step</a></p>
+  <p>
+      If you would like no one but the parents/guardians to be contacted in an emergency, you may
+      <a href="{% url 'contact_form:user_new_doctor_initial' student.id %}">skip to the next step</a>
+  </p>
 
 {% endblock content %}

@@ -25,21 +25,25 @@
                 </tr>
                 <tr>
                     <td>
-                        <b>Address: </b>{% if not parent.street %}NONE{% else %}{{ parent.get_mailing_address }}{% endif %}
+                        <b>Address: </b>
+                        {% if not parent.street %}NONE{% else %}{{ parent.get_mailing_address }}{% endif %}
                     </td>
-                    <td><b>Email Address: </b>{% if not parent.email_address %}NONE{% endif %}{{ parent.email_address }}</td>
+                    <td><b>Email Address: </b>
+                        {% if not parent.email_address %}NONE{% else %}{{ parent.email_address }}{% endif %}</td>
                     <td>
                         <b>Cell Number: </b>
-                        {% if not parent.secondary_number %}NONE{% endif %}{{ parent.secondary_number }}
+                        {% if not parent.secondary_number %}NONE{% else %}{{ parent.secondary_number }}{% endif %}
                     </td>
                 </tr>
                 <tr>
-                    <td><b>Business Name: </b>{% if not parent.business_name %}NONE{% endif %}{{ parent.business_name }}</td>
+                    <td><b>Business Name: </b>
+                        {% if not parent.business_name %}NONE{% else %}{{ parent.business_name }}{% endif %}</td>
                     <td>
                         <b>Business Address: </b>
                         {% if not parent.bus_street %}NONE{% else %}{{ parent.get_business_address }}{% endif %}
                     </td>
-                    <td><b>Work Number: </b>{% if not parent.work_number %}NONE{% endif %}{{ parent.work_number }}</td>
+                    <td><b>Work Number: </b>
+                        {% if not parent.work_number %}NONE{% else %}{{ parent.work_number }}{% endif %}</td>
                 </tr>
             {% endfor %}
 
@@ -48,14 +52,21 @@
                 <td colspan="2"><b>Emergency Contact Person(s)</b></td>
                 <td><b>Phone Number when Child is in Care</b></td>
             </tr>
-            {% for adult in adults %}
-            {% if adult.relationship == "EC" or adult.relationship == "PP"  and adult.is_contact %}
-            <tr>
-                <td colspan="2">{{ adult.first_name }} {{ adult.last_name }}</td>
-                <td>{{ adult.primary_number }}</td>
-            </tr>
+            {% if contacts %}
+                {% for contact in contacts %}
+                    <tr>
+                        <td colspan="2">{{ contact.first_name }} {{ contact.last_name }}</td>
+                        <td>{{ contact.primary_number }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for parent in parents %}
+                    <tr>
+                        <td colspan="2">{{ parent.first_name }} {{ parent.last_name }}</td>
+                        <td>{{ parent.primary_number }}</td>
+                    </tr>
+                {% endfor %}
             {% endif %}
-            {% endfor %}
 
             <!--Persons to whom child may be released-->
             <tr>
@@ -63,15 +74,24 @@
                 <td><b>Address</b></td>
                 <td><b>Phone Number</b></td>
             </tr>
-            {% for adult in adults %}
-            {% if adult.relationship == "PP" %}
-            <tr>
-                <td>{{ adult.first_name }} {{ adult.last_name }}</td>
-                <td>{% if not adult.street %}NONE{% else %}{{ adult.get_mailing_address }}{% endif %}</td>
-                <td>{{ adult.primary_number }}</td>
-            </tr>
+            {% if pickups %}
+                {% for pickup in pickups %}
+                    <tr>
+                        <td>{{ pickup.first_name }} {{ pickup.last_name }}</td>
+                        <td>{% if not pickup.street %}NONE{% else %}{{ pickup.get_mailing_address }}{% endif %}</td>
+                        <td>{{ pickup.primary_number }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for parent in parents %}
+                    <tr>
+                        <td>{{ parent.first_name }} {{ parent.last_name }}</td>
+                        <td>{% if not parent.street %}NONE{% else %}{{ parent.get_mailing_address }}{% endif %}</td>
+                        <td>{{ parent.primary_number }}</td>
+                    </tr>
+                {% endfor %}
             {% endif %}
-            {% endfor %}
+
 
             <!-- Doctor info -->
             {% for adult in adults %}

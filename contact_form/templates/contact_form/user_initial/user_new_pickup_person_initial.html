@@ -10,5 +10,9 @@
       <button name="add_another">Save and Add another Person</button>
       <button name="submit">Save and Continue</button>
   </form>
+  <p>
+      If you would like no one but the parents/guardians to pick up the child, you may
+      <a href="{% url 'contact_form:user_new_contact_initial' student.id %}">skip to the next step.</a>
+  </p>
 
 {% endblock content %}

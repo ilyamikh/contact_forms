@@ -49,11 +49,11 @@ urlpatterns = [
     path('view_form/<int:student_id>/', views.view_form, name='view_form'),
 
     # Basic Child info page
-    path('/user_initial/user_new_student_initial/', views.user_new_student_initial, name='user_new_student_initial'),
+    path('user_initial/user_new_student_initial/', views.user_new_student_initial, name='user_new_student_initial'),
 
     # Child medical info page
     path(
-        '/user_initial/user_student_medical_initial/<int:student_id>/',
+        'user_initial/user_student_medical_initial/<int:student_id>/',
         views.user_student_medical_initial,
         name='user_student_medical_initial'
     ),

@@ -2,12 +2,13 @@
 
 {% block content %}
   <h3>Child Medical Info</h3>
-  <p>Please complete the medical information. Health insurance and policy number are required.</p>
+  <p>Please complete the medical information. Health Insurance and policy number are required.</p>
+
 
   <form action="{% url 'contact_form:user_student_medical_initial' student.id %}" method="post">
       {% csrf_token %}
       {{ form.as_p }}
       <button name="submit">Save and Continue</button>
   </form>
-
+  <p>If the child does not have medical insurance, write "UNINSURED" and fill policy number with "NONE".</p>
 {% endblock content %}

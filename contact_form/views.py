@@ -42,10 +42,13 @@ def view_form(request, student_id):
     for adult in adults:
         if adult.relationship == "EC" or (adult.relationship == "PP" and adult.is_contact):
             contacts.append(adult)
-        elif adult.relationship == "PP":
-            pickups.append(adult)
         elif adult.relationship in ["MO", "FA", "LG"]:
             parents.append(adult)
+
+    # Redundant loop
+    for adult in adults:
+        if adult.relationship == "PP":
+            pickups.append(adult)
 
     context = {
                 'student': student,
