@@ -1,0 +1,12 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+  <h3>Basic Child info</h3>
+  <p>Please provide the required child information. </p>
+  <form action="{% url 'contact_form:user_new_student_initial' %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="submit">Save and Continue</button>
+  </form>
+
+{% endblock content %}

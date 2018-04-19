@@ -8,6 +8,7 @@ from django.urls import reverse
 from .models import Student, Adult
 from .forms import GuardianEntryForm, ContactEntryForm, PickupPersonEntryForm, PhysicianEntryForm
 from .forms import BasicChildInfoForm, ChildMedicalInfoForm, EditChildForm, EditAdultForm
+from .forms import UserBasicChildInfo
 
 
 def index(request):
@@ -58,10 +59,10 @@ def user_new_student_initial(request):
     """User adds a new student for the first time."""
     if request.method != 'POST':
         # No data submitted, create a blank form
-        form = BasicChildInfoForm(initial={'internal_id': generate_id()})
+        form = UserBasicChildInfo(initial={'internal_id': generate_id()})
     else:
         # POST data submitted; process data.
-        form = BasicChildInfoForm(data=request.POST)
+        form = UserBasicChildInfo(data=request.POST)
         if form.is_valid():
             student = form.save()
             # Take the user to enter student medical info next
@@ -72,7 +73,7 @@ def user_new_student_initial(request):
 
 
 def user_student_medical_initial(request, student_id):
-    """User enters sutend medical info for the first time."""
+    """User enters student medical info for the first time."""
     student = Student.objects.get(id=student_id)
 
     if request.method != 'POST':
@@ -88,6 +89,28 @@ def user_student_medical_initial(request, student_id):
 
     context = {'student': student, 'form': form}
     return render(request, 'contact_form/user_initial/user_student_medical_initial.html', context)
+
+
+def user_new_guardian_initial(request, student_id):
+    """User enters the initial first guardian."""
+    student = Student.objects.get(id=student_id)
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = GuardianEntryForm(initial={
+            'street': student.street, 'city': student.city, 'state': student.state, 'zip': student.zip,
+        })
+    else:
+        # POST data submitted; process data.
+        form = GuardianEntryForm(data=request.POST)
+        if form.is_valid():
+            new_guardian = form.save(commit=False)
+            new_guardian.child = student
+            new_guardian.save()
+            return HttpResponseRedirect(reverse('contact_form:student', args=[student_id]))
+
+    context = {'student': student, 'form': form}
+    return render(request, 'contact_form/user_initial/user_new_guardian_initial.html', context)
 
 
 def student_medical(request, student_id):

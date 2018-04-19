@@ -1,0 +1,13 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+  <h3>Child Medical Info</h3>
+  <p>Please complete the medical information. Health insurance and policy number are required.</p>
+
+  <form action="{% url 'contact_form:user_student_medical_initial' student.id %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="submit">Save and Continue</button>
+  </form>
+
+{% endblock content %}

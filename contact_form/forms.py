@@ -28,6 +28,29 @@ class BasicChildInfoForm(forms.ModelForm):
                    }
 
 
+class UserBasicChildInfo(forms.ModelForm):
+    """Non-optional fields for the User to complete."""
+    class Meta:
+        model = Student
+        fields = [
+            'first_name', 'last_name', 'date_of_birth',
+            'street', 'city', 'state', 'zip',
+        ]
+        labels = {'first_name': 'First Name',
+                  'last_name': 'Last Name',
+                  'date_of_birth': 'Date of Birth',
+                  'street': 'Street Address',
+                  'city': 'City',
+                  'state': 'State',
+                  'zip': 'Zip Code',
+                  }
+        widgets = {
+                'first_name': forms.TextInput(attrs={'required': True}),
+                'last_name': forms.TextInput(attrs={'required': True}),
+                'date_of_birth': forms.DateInput(attrs={'required': True}),
+                   }
+
+
 class ChildMedicalInfoForm(forms.ModelForm):
     """Child medical info, special conditions, and insurance."""
     class Meta:

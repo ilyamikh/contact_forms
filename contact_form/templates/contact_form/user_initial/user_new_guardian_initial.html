@@ -1,0 +1,13 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+  <h3>Parent/Guardian Info</h3>
+  <p>Please complete the parent/guardian information. Choose the relationship to the child.</p>
+  <form action="{% url 'contact_form:user_new_guardian_initial' student.id %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="add_another">Save and Add another Parent/Guardian</button>
+      <button name="submit">Save and Continue</button>
+  </form>
+
+{% endblock content %}
