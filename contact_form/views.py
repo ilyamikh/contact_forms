@@ -35,7 +35,25 @@ def view_form(request, student_id):
     """Display the emergency contact form."""
     student = Student.objects.get(id=student_id)
     adults = student.adult_set.order_by('-last_name')
-    context = {'student': student, 'adults': adults}
+
+    contacts = []
+    pickups = []
+    parents = []
+    for adult in adults:
+        if adult.relationship == "EC" or (adult.relationship == "PP" and adult.is_contact):
+            contacts.append(adult)
+        elif adult.relationship == "PP":
+            pickups.append(adult)
+        elif adult.relationship in ["MO", "FA", "LG"]:
+            parents.append(adult)
+
+    context = {
+                'student': student,
+                'adults': adults,
+                'contacts': contacts,
+                'pickups': pickups,
+                'parents': parents,
+               }
     return render(request, 'contact_form/view_form.html', context)
 
 
