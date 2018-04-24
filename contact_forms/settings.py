@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # My apps
     'contact_form',
+    'users',
 ]
 
 MIDDLEWARE = [
