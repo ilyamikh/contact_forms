@@ -1,0 +1,13 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+
+    <form method="post" action="{% url 'users:register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button name="submit">Register</button>
+        <input type="hidden" name="next" value="{% url 'contact_form:index' %}" />
+    </form>
+
+{% endblock content %}

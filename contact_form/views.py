@@ -3,7 +3,7 @@ import random, datetime, time
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from django.contrib.auth.decorators import login_required
 
 from .models import Student, Adult
 from .forms import GuardianEntryForm, ContactEntryForm, PickupPersonEntryForm, PhysicianEntryForm
@@ -16,6 +16,7 @@ def index(request):
     return render(request, 'contact_form/index.html')
 
 
+@login_required
 def students(request):
     """Show all students."""
     students = Student.objects.order_by('date_added')
@@ -23,6 +24,7 @@ def students(request):
     return render(request, 'contact_form/students.html', context)
 
 
+@login_required
 def student(request, student_id):
     """Show a single student and his info."""
     student = Student.objects.get(id=student_id)
@@ -31,6 +33,7 @@ def student(request, student_id):
     return render(request, 'contact_form/student.html', context)
 
 
+@login_required
 def view_form(request, student_id):
     """Display the emergency contact form."""
     student = Student.objects.get(id=student_id)
@@ -60,6 +63,7 @@ def view_form(request, student_id):
     return render(request, 'contact_form/view_form.html', context)
 
 
+@login_required
 def new_student(request):
     """Add a new Student."""
     if request.method != 'POST':
@@ -76,6 +80,7 @@ def new_student(request):
     return render(request, 'contact_form/new_student.html', context)
 
 
+@login_required
 def user_new_student_initial(request):
     """User adds a new student for the first time."""
     if request.method != 'POST':
@@ -93,6 +98,7 @@ def user_new_student_initial(request):
     return render(request, 'contact_form/user_initial/user_new_student_initial.html', context)
 
 
+@login_required
 def user_student_medical_initial(request, student_id):
     """User enters student medical info for the first time."""
     student = Student.objects.get(id=student_id)
@@ -112,6 +118,7 @@ def user_student_medical_initial(request, student_id):
     return render(request, 'contact_form/user_initial/user_student_medical_initial.html', context)
 
 
+@login_required
 def user_new_guardian_initial(request, student_id):
     """User enters the initial first guardian."""
     student = Student.objects.get(id=student_id)
@@ -139,6 +146,7 @@ def user_new_guardian_initial(request, student_id):
     return render(request, 'contact_form/user_initial/user_new_guardian_initial.html', context)
 
 
+@login_required
 def user_new_pickup_person_initial(request, student_id):
     """Users enters the initial pickup person."""
     student = Student.objects.get(id=student_id)
@@ -164,6 +172,7 @@ def user_new_pickup_person_initial(request, student_id):
     return render(request, 'contact_form/user_initial/user_new_pickup_person_initial.html', context)
 
 
+@login_required
 def user_new_contact_initial(request, student_id):
     """User enters the initial emergency contact."""
     student = Student.objects.get(id=student_id)
@@ -189,6 +198,7 @@ def user_new_contact_initial(request, student_id):
     return render(request, 'contact_form/user_initial/user_new_contact_initial.html', context)
 
 
+@login_required
 def user_new_doctor_initial(request, student_id):
     """User enters doctor info for the first time."""
     student = Student.objects.get(id=student_id)
@@ -211,6 +221,7 @@ def user_new_doctor_initial(request, student_id):
     return render(request, 'contact_form/user_initial/user_new_doctor_initial.html', context)
 
 
+@login_required
 def student_medical(request, student_id):
     """Fill in Student medical info."""
     student = Student.objects.get(id=student_id)
@@ -229,6 +240,7 @@ def student_medical(request, student_id):
     return render(request, 'contact_form/student_medical.html', context)
 
 
+@login_required
 def edit_student(request, student_id):
     """Edit all student fields."""
     student = Student.objects.get(id=student_id)
@@ -247,6 +259,7 @@ def edit_student(request, student_id):
     return render(request, 'contact_form/edit_student.html', context)
 
 
+@login_required
 def new_guardian(request, student_id):
     """Add a Student's Guardian"""
     student = Student.objects.get(id=student_id)
@@ -269,6 +282,7 @@ def new_guardian(request, student_id):
     return render(request, 'contact_form/new_guardian.html', context)
 
 
+@login_required
 def edit_adult(request, adult_id):
     """Edit all adult fields."""
     adult = Adult.objects.get(id=adult_id)
@@ -288,6 +302,7 @@ def edit_adult(request, adult_id):
     return render(request, 'contact_form/edit_adult.html', context)
 
 
+@login_required
 def remove_adult(request, adult_id):
     adult = Adult.objects.get(id=adult_id)
     student = adult.child
@@ -296,6 +311,7 @@ def remove_adult(request, adult_id):
     return HttpResponseRedirect(reverse('contact_form:student', args=[student.id]))
 
 
+@login_required
 def remove_student(request, student_id):
     student = Student.objects.get(id=student_id)
     student.delete()
@@ -303,6 +319,7 @@ def remove_student(request, student_id):
     return HttpResponseRedirect(reverse('contact_form:students'))
 
 
+@login_required
 def new_contact(request, student_id):
     """Add a Student's emergency contact"""
     student = Student.objects.get(id=student_id)
@@ -323,6 +340,7 @@ def new_contact(request, student_id):
     return render(request, 'contact_form/new_contact.html', context)
 
 
+@login_required
 def new_pickup_contact(request, student_id):
     """Add a person to whom the Child may be released."""
     student = Student.objects.get(id=student_id)
@@ -343,6 +361,7 @@ def new_pickup_contact(request, student_id):
     return render(request, 'contact_form/new_pickup_contact.html', context)
 
 
+@login_required
 def new_physician(request, student_id):
     """Add a physician/medical care provider."""
     student = Student.objects.get(id=student_id)
@@ -365,6 +384,7 @@ def new_physician(request, student_id):
     return render(request, 'contact_form/new_physician.html', context)
 
 
+@login_required
 def generate_id():
     """Generates a 6-digit ID with the last 2 digits of the current year as the first 2 digits of ID"""
     year = get_year()
@@ -378,6 +398,7 @@ def generate_id():
     return id
 
 
+@login_required
 def is_used(id):
     """Checks if the ID has already been used"""
     id_list = []
