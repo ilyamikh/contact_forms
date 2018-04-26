@@ -1,20 +1,23 @@
 {% extends "contact_form/base.html" %}
 
+{% block header %}
+    <h1>Children</h1>
+    <h2><a href="{% url 'contact_form:user_new_student_initial' %}">Add a new Child</a></h2>
+{% endblock header %}
+
 {% block content %}
 
-  <p>Children</p>
-  <p><a href="{% url 'contact_form:user_new_student_initial' %}">Add a new Child</a></p>
   <ul>
       {% for student in students %}
         <li>
-            <a href="{% url 'contact_form:student' student.id %}">{{ student }}</a>
+            <h4><a href="{% url 'contact_form:student' student.id %}">{{ student }}</a></h4>
         </li>
       {% empty %}
         <li>No children have been added yet.</li>
       {% endfor %}
   </ul>
 
-  <a href="{% url 'contact_form:new_student' %}">Add Child (Advanced)</a><br>
+  <h3><a href="{% url 'contact_form:new_student' %}">Add Child (Advanced)</a></h3>
 
 
 {% endblock content %}

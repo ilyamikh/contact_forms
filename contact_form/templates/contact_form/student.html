@@ -1,9 +1,14 @@
 {% extends 'contact_form/base.html' %}
 
-{% block content %}
-  <p>Child: {{ student }}
+{% block header %}
+<h2>{{ student }}</h2>
+  <p>
       <a href="{% url 'contact_form:remove_student' student.id %}">Remove</a>
   </p>
+{% endblock header %}
+
+{% block content %}
+
   <p>
       <a href="{% url 'contact_form:view_form' student.id %}">View Emergency Contact/Parental Consent Form</a><br>
       <a href="{% url 'contact_form:edit_student' student.id %}">Edit Student Info</a>
