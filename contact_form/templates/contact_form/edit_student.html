@@ -1,15 +1,22 @@
+
 {% extends "contact_form/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Student Information</h2>
+    <p><a href="{% url 'contact_form:student' student.id %}">{{ student }}</a></p>
+{% endblock header %}
 
 {% block content %}
 
-  <p><a href="{% url 'contact_form:student' student.id %}">{{ student }}</a></p>
-
-  <p>Student Information:</p>
-
-  <form action="{% url 'contact_form:edit_student' student.id %}" method="post">
+  <form action="{% url 'contact_form:edit_student' student.id %}" method="post" class="form">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button name="submit">Save Changes</button>
+      {% bootstrap_form form %}
+
+      {% buttons %}
+      <button name="submit" class="btn btn-primary">Save Changes</button>
+      {% endbuttons %}
+
   </form>
 
 {% endblock content %}

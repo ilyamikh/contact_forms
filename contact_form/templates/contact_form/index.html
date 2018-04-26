@@ -1,5 +1,16 @@
 {% extends "contact_form/base.html" %}
 
+{% block header %}
+  <div class="jumbotron">
+    <h1>Contact Form</h1>
+  </div>
+{% endblock header %}
+
 {% block content %}
-  <p>A convenient form for parents to submit the necessary data on their children. Pre-Alpha.</p>
+    <h2>
+      <a href="{% url 'users:register' %}">Register an account</a> to fill out the required information on your child.
+    </h2>
+    <h2>
+      A convenient form for parents to submit the information about their childred. Pre-Alpha.
+    </h2>
 {% endblock content %}

@@ -1,13 +1,22 @@
 {% extends "contact_form/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Parent/Guardian Info</h2>
+{% endblock header %}
 
 {% block content %}
-  <h3>Parent/Guardian Info</h3>
-  <p>Please complete the parent/guardian information. Choose the relationship to the child.</p>
-  <form action="{% url 'contact_form:user_new_guardian_initial' student.id %}" method="post">
+  <h3>Please complete the parent/guardian information. Choose the relationship to the child</h3>
+
+  <form action="{% url 'contact_form:user_new_guardian_initial' student.id %}" method="post" class="form">
       {% csrf_token %}
-      {{ form.as_p }}
+      {% bootstrap_form form %}
+
+      {% buttons %}
       <button name="add_another">Save and Add another Parent/Guardian</button>
-      <button name="submit">Save and Continue</button>
+      <button name="submit" class="btn btn-primary">Save and Continue</button>
+      {% endbuttons %}
+
   </form>
 
 {% endblock content %}

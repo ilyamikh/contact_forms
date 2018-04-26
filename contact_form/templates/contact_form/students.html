@@ -3,7 +3,7 @@
 {% block content %}
 
   <p>Children</p>
-
+  <p><a href="{% url 'contact_form:user_new_student_initial' %}">Add a new Child</a></p>
   <ul>
       {% for student in students %}
         <li>
@@ -14,7 +14,7 @@
       {% endfor %}
   </ul>
 
-  <a href="{% url 'contact_form:new_student' %}">Add a new Child:</a><br>
-  <a href="{% url 'contact_form:user_new_student_initial' %}">Add a new Child (Prompts)</a>
+  <a href="{% url 'contact_form:new_student' %}">Add Child (Advanced)</a><br>
+
 
 {% endblock content %}

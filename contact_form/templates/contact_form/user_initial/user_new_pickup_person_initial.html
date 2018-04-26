@@ -1,18 +1,25 @@
 {% extends "contact_form/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Person to Whom the Child May be Released</h2>
+{% endblock header %}
 
 {% block content %}
-  <h3>Person to Whom the Child May be Released</h3>
-  <p>Please enter the information on the person who can pick up the child other than the parents or guardians.</p>
+  <h3>Please enter the information on the person who can pick up the child other than the parents or guardians.</h3>
   <p>Check the box if you would like this person to also be an emergency contact.</p>
-  <form action="{% url 'contact_form:user_new_pickup_person_initial' student.id %}" method="post">
+  <form action="{% url 'contact_form:user_new_pickup_person_initial' student.id %}" method="post" class="form">
       {% csrf_token %}
-      {{ form.as_p }}
+      {% bootstrap_form form %}
+
+      {% buttons %}
       <button name="add_another">Save and Add another Person</button>
-      <button name="submit">Save and Continue</button>
+      <button name="submit" class="btn btn-primary">Save and Continue</button>
+      {% endbuttons %}
+
   </form>
   <p>
       If you would like no one but the parents/guardians to pick up the child, you may
       <a href="{% url 'contact_form:user_new_contact_initial' student.id %}">skip to the next step.</a>
   </p>
-
 {% endblock content %}

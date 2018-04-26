@@ -1,14 +1,21 @@
 {% extends "contact_form/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Add Physician/Medical Care Provider</h2>
+    <p><a href="{% url 'contact_form:student' student.id %}">{{ student }}</a></p>
+{% endblock header %}
 
 {% block content %}
 
-  <p><a href="{% url 'contact_form:student' student.id %}">{{ student }}</a></p>
-
-  <p>Add Physician/Medical Care Provider:</p>
-  <form action="{% url 'contact_form:new_physician' student.id %}" method="post">
+  <form action="{% url 'contact_form:new_physician' student.id %}" method="post" class="form">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button name="submit">Add Physician</button>
+      {% bootstrap_form form %}
+
+      {% buttons %}
+      <button name="submit" class="btn btn-primary">Add Physician</button>
+      {% endbuttons %}
+
   </form>
 
 {% endblock content %}

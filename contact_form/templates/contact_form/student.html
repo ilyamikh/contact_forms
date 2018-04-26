@@ -9,14 +9,7 @@
       <a href="{% url 'contact_form:edit_student' student.id %}">Edit Student Info</a>
   </p>
   <p>Contacts:</p>
-  <p>
-      <a href="{% url 'contact_form:student_medical' student.id %}">Add/Edit Medical Information</a><br>
-      <a href="{% url 'contact_form:new_guardian' student.id %}">Add Parent/Guardian</a><br>
-      <a href="{% url 'contact_form:new_contact' student.id %}">Add Emergency Contact</a><br>
-      <a href="{% url 'contact_form:new_pickup_contact' student.id %}">Add Person to whom the Child May Be Released</a>
-      <br>
-      <a href="{% url 'contact_form:new_physician' student.id %}">Add Physician/Medical Care Provider</a><br>
-  </p>
+
   <ul>
       {% for adult in adults %}
         <li>
@@ -32,5 +25,13 @@
         </li>
       {% endfor %}
   </ul>
+  <p>
+      <a href="{% url 'contact_form:student_medical' student.id %}">Add/Edit Medical Information</a><br>
+      <a href="{% url 'contact_form:new_guardian' student.id %}">Add Parent/Guardian</a><br>
+      <a href="{% url 'contact_form:new_contact' student.id %}">Add Emergency Contact</a><br>
+      <a href="{% url 'contact_form:new_pickup_contact' student.id %}">Add Person to whom the Child May Be Released</a>
+      <br>
+      <a href="{% url 'contact_form:new_physician' student.id %}">Add Physician/Medical Care Provider</a><br>
+  </p>
 
 {% endblock content %}

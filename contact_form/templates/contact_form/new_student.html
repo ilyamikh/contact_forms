@@ -1,11 +1,20 @@
 {% extends "contact_form/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Add a new student.</h2>
+{% endblock header %}
 
 {% block content %}
-  <p>Add a new Student:</p>
-  <form action="{% url 'contact_form:new_student' %}" method="post">
+
+  <form action="{% url 'contact_form:new_student' %}" method="post" class="form">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button name="submit">Add Child</button>
+      {% bootstrap_form form %}
+
+      {% buttons %}
+      <button name="submit" class="btn btn-primary">Add Child</button>
+      {% endbuttons %}
+
   </form>
 
 {% endblock content %}

@@ -1,7 +1,7 @@
 import random, datetime, time
 
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -19,15 +19,21 @@ def index(request):
 @login_required
 def students(request):
     """Show all students."""
-    students = Student.objects.order_by('date_added')
+    students = Student.objects.filter(owner=request.user).order_by('date_added')
     context = {'students': students}
     return render(request, 'contact_form/students.html', context)
+
+
+def check_owner(student, request):
+    if student.owner != request.user:
+        raise Http404
 
 
 @login_required
 def student(request, student_id):
     """Show a single student and his info."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
     adults = student.adult_set.order_by('-last_name')
     context = {'student': student, 'adults': adults}
     return render(request, 'contact_form/student.html', context)
@@ -37,6 +43,7 @@ def student(request, student_id):
 def view_form(request, student_id):
     """Display the emergency contact form."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
     adults = student.adult_set.order_by('-last_name')
 
     contacts = []
@@ -73,7 +80,9 @@ def new_student(request):
         # POST data submitted; process data.
         form = BasicChildInfoForm(data=request.POST)
         if form.is_valid():
-            student = form.save()
+            student = form.save(commit=False)
+            student.owner = request.user
+            student.save()
             return HttpResponseRedirect(reverse('contact_form:new_guardian', args=[student.id]))
 
     context = {'form': form}
@@ -90,7 +99,9 @@ def user_new_student_initial(request):
         # POST data submitted; process data.
         form = UserBasicChildInfo(data=request.POST)
         if form.is_valid():
-            student = form.save()
+            student = form.save(commit=False)
+            student.owner = request.user
+            student.save()
             # Take the user to enter student medical info next
             return HttpResponseRedirect(reverse('contact_form:user_student_medical_initial', args=[student.id]))
 
@@ -102,6 +113,7 @@ def user_new_student_initial(request):
 def user_student_medical_initial(request, student_id):
     """User enters student medical info for the first time."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current student.
@@ -122,6 +134,7 @@ def user_student_medical_initial(request, student_id):
 def user_new_guardian_initial(request, student_id):
     """User enters the initial first guardian."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -150,6 +163,7 @@ def user_new_guardian_initial(request, student_id):
 def user_new_pickup_person_initial(request, student_id):
     """Users enters the initial pickup person."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -176,6 +190,7 @@ def user_new_pickup_person_initial(request, student_id):
 def user_new_contact_initial(request, student_id):
     """User enters the initial emergency contact."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -202,6 +217,7 @@ def user_new_contact_initial(request, student_id):
 def user_new_doctor_initial(request, student_id):
     """User enters doctor info for the first time."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -225,6 +241,7 @@ def user_new_doctor_initial(request, student_id):
 def student_medical(request, student_id):
     """Fill in Student medical info."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current student.
@@ -244,6 +261,7 @@ def student_medical(request, student_id):
 def edit_student(request, student_id):
     """Edit all student fields."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current student.
@@ -263,6 +281,7 @@ def edit_student(request, student_id):
 def new_guardian(request, student_id):
     """Add a Student's Guardian"""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -287,6 +306,7 @@ def edit_adult(request, adult_id):
     """Edit all adult fields."""
     adult = Adult.objects.get(id=adult_id)
     student = adult.child
+    check_owner(student, request)
 
     if request.method != 'POST':
         # Initial request; pre-fill form with the current student.
@@ -306,6 +326,7 @@ def edit_adult(request, adult_id):
 def remove_adult(request, adult_id):
     adult = Adult.objects.get(id=adult_id)
     student = adult.child
+    check_owner(student, request)
     adult.delete()
 
     return HttpResponseRedirect(reverse('contact_form:student', args=[student.id]))
@@ -314,6 +335,7 @@ def remove_adult(request, adult_id):
 @login_required
 def remove_student(request, student_id):
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
     student.delete()
 
     return HttpResponseRedirect(reverse('contact_form:students'))
@@ -323,6 +345,7 @@ def remove_student(request, student_id):
 def new_contact(request, student_id):
     """Add a Student's emergency contact"""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -344,6 +367,7 @@ def new_contact(request, student_id):
 def new_pickup_contact(request, student_id):
     """Add a person to whom the Child may be released."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -365,6 +389,7 @@ def new_pickup_contact(request, student_id):
 def new_physician(request, student_id):
     """Add a physician/medical care provider."""
     student = Student.objects.get(id=student_id)
+    check_owner(student, request)
 
     if request.method != 'POST':
         # No data submitted; create a blank form.
@@ -384,29 +409,27 @@ def new_physician(request, student_id):
     return render(request, 'contact_form/new_physician.html', context)
 
 
-@login_required
 def generate_id():
     """Generates a 6-digit ID with the last 2 digits of the current year as the first 2 digits of ID"""
     year = get_year()
     lower = year * 10000
     upper = lower + 9999
-    id = random.randint(lower, upper)
+    id_num = random.randint(lower, upper)
 
-    while is_used(id):
-        id = random.randint(lower, upper)
+    while is_used(id_num):
+        id_num = random.randint(lower, upper)
 
-    return id
+    return id_num
 
 
-@login_required
-def is_used(id):
+def is_used(id_num):
     """Checks if the ID has already been used"""
     id_list = []
     students = Student.objects.all()
     for student in students:
         id_list.append(student.internal_id)
 
-    if id in id_list:
+    if id_num in id_list:
         return True
     else:
         return False
