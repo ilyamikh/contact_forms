@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from attendance.models import Group
 
 
 class Student(models.Model):
     """The class represents the a chid's info, pointing to his application data"""
     internal_id = models.IntegerField(unique=True)  # Need to take care of this somehow
     is_active = models.BooleanField(default=True)
+    group = models.ForeignKey(Group, models.SET_NULL, blank=True, null=True)
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
