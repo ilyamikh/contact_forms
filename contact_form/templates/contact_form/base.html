@@ -25,6 +25,7 @@
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
                                 <li><a href="{% url 'contact_form:students' %}">Children</a></li>
+                                <li><a href="{% url 'attendance:groups' %}">Classrooms</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 {% if user.is_authenticated %}

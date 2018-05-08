@@ -1,0 +1,24 @@
+{% extends 'contact_form/base.html' %}
+
+{% block header %}
+<h2>{{ group }}</h2>
+{% endblock header %}
+
+{% block content %}
+
+  <p>Students:</p>
+
+  <ul>
+      {% for student in students %}
+        <li>
+            <p><a href="{% url 'contact_form:student' student.id %}">{{ student }}</a></p>
+        </li>
+      {% empty %}
+        <li>
+            There are no children in this classroom yet.
+        </li>
+      {% endfor %}
+  </ul>
+
+
+{% endblock content %}

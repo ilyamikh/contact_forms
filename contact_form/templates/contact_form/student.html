@@ -3,7 +3,7 @@
 {% block header %}
 <h2>{{ student }}</h2>
   <p>
-      <a href="{% url 'contact_form:remove_student' student.id %}">Remove</a>
+      <a href="{% url 'contact_form:remove_student' student.id %}">Delete</a>
   </p>
 {% endblock header %}
 
@@ -20,7 +20,7 @@
         <li>
             <p>{{ adult }}
                 <a href="{% url 'contact_form:edit_adult' adult.id %}">Edit</a>
-                <a href="{% url 'contact_form:remove_adult' adult.id %}">Remove</a>
+                <a href="{% url 'contact_form:remove_adult' adult.id %}">Delete</a>
             </p>
             <p>{{ adult.primary_number }}</p>
         </li>

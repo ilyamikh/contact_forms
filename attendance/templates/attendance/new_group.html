@@ -1,0 +1,13 @@
+{% extends "contact_form/base.html" %}
+
+{% block content %}
+
+    <form method="post" action="{% url 'attendance:new_group' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button name="submit">Add Classroom</button>
+        <input type="hidden" name="next" value="{% url 'attendance:groups' %}" />
+    </form>
+
+{% endblock content %}

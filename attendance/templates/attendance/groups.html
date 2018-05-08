@@ -1,0 +1,22 @@
+{% extends "contact_form/base.html" %}
+
+{% block header %}
+    <h1>Classrooms</h1>
+    <h2><a href="{% url 'attendance:new_group' %}">Add a new Classroom</a></h2>
+{% endblock header %}
+
+{% block content %}
+
+  <ul>
+      {% for group in groups %}
+        <li>
+            <h4><a href="{% url 'attendance:group' group.id %}">{{ group }}</a></h4>
+        </li>
+      {% empty %}
+        <li>No classrooms have been added yet.</li>
+      {% endfor %}
+  </ul>
+
+
+
+{% endblock content %}
