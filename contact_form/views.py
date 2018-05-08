@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import Student, Adult
+from .models import Student, Adult, Group, Day
 from .forms import GuardianEntryForm, ContactEntryForm, PickupPersonEntryForm, PhysicianEntryForm
 from .forms import BasicChildInfoForm, ChildMedicalInfoForm, EditChildForm, EditAdultForm
 from .forms import UserBasicChildInfo

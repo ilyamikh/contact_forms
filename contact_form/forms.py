@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Student, Adult
+from .models import Student, Adult, Group, Day
 
 
 class BasicChildInfoForm(forms.ModelForm):
@@ -80,7 +80,7 @@ class EditChildForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = [
-            'internal_id', 'is_active',
+            'internal_id', 'is_active', 'group',
             'first_name', 'last_name', 'date_of_birth',
             'street', 'city', 'state', 'zip',
             'disabilities', 'allergies', 'emergency_medical_info', 'medications', 'additional_info',
@@ -89,6 +89,7 @@ class EditChildForm(forms.ModelForm):
         labels = {
             'internal_id': 'Student ID',
             'is_active': 'Active',
+            'group': 'Classroom',
             'first_name': 'First Name',
             'last_name': 'Last Name',
             'date_of_birth': 'Date of Birth',
@@ -105,6 +106,7 @@ class EditChildForm(forms.ModelForm):
             'policy_number': 'Policy Number (Required)',
         }
         widgets = {
+                'group': forms.Select(choices=Group.objects.all()),
                 'first_name': forms.TextInput(attrs={'required': True}),
                 'last_name': forms.TextInput(attrs={'required': True}),
                 'date_of_birth': forms.DateInput(attrs={'required': True}),
