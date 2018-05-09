@@ -50,7 +50,7 @@ class UserBasicChildInfo(forms.ModelForm):
                 'first_name': forms.TextInput(attrs={'required': True}),
                 'last_name': forms.TextInput(attrs={'required': True}),
                 'date_of_birth': forms.DateInput(attrs={'required': True}),
-                'internal_id': forms.HiddenInput()
+                'internal_id': forms.HiddenInput(),
                    }
 
 

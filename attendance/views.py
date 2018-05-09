@@ -4,7 +4,38 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from contact_form.models import Group, Day, Student
-from .forms import GroupForm
+from .forms import GroupForm, GroupDayForm
+
+from datetime import date
+
+
+@login_required
+def attendance_view(request, student_id):
+    """Displays a group of students with checkboxes for attendance (hopefully)"""
+    student = Student.objects.get(id=student_id)
+    days = student.day_set.order_by('-date')
+    context = {'student': student, 'days': days}
+    return render(request, 'attendance/attendance_view.html', context)
+
+
+@login_required
+def mark_student(request, student_id):
+    """Display a student with corresponding checkboxes for attendance."""
+    student = Student.objects.get(id=student_id)
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = GroupDayForm(initial={'date': date.today()})
+    else:
+        # POST data submitted; process data.
+        form = GroupForm(data=request.POST)
+        if form.is_valid():
+            day = form.save(commit=False)
+            day.student = student
+            day.save()
+        return HttpResponseRedirect(reverse('attendance:groups'))  # not sure about this
+
+    context = {'student': student, 'form': form}  # or this
+    return render(request, 'attendance/mark_student.html', context)
 
 
 @login_required

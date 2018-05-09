@@ -2,7 +2,7 @@
 
 {% block header %}
     <h1>Classrooms</h1>
-    <h2><a href="{% url 'attendance:new_group' %}">Add a new Classroom</a></h2>
+    <p><a href="{% url 'attendance:new_group' %}">Add a new Classroom</a></p>
 {% endblock header %}
 
 {% block content %}
@@ -10,7 +10,10 @@
   <ul>
       {% for group in groups %}
         <li>
-            <h4><a href="{% url 'attendance:group' group.id %}">{{ group }}</a></h4>
+            <h4>{{ group }}:&nbsp
+                <a href="{% url 'attendance:group' group.id %}">Students</a>&nbsp
+                <a href="{% url 'attendance:attendance_view' group.id %}">Attendance and Meal Count</a>
+            </h4>
         </li>
       {% empty %}
         <li>No classrooms have been added yet.</li>

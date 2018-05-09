@@ -10,18 +10,21 @@
 
   <ul>
       {% for student in students %}
-        <li>
-            <p>
-                {{ student }}&nbsp
-                <a href="{% url 'contact_form:student' student.id %}">View Info</a>&nbsp
-                <a href="{% url 'attendance:mark_student' student.id %}">Mark Attendance and Meal Count</a>
-            </p>
-        </li>
+      <form method="post" action="{% url 'attendance:mark_student' student.id%}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+
+
       {% empty %}
         <li>
             There are no children in this classroom yet.
         </li>
+
       {% endfor %}
+          <button name="submit">Save</button>
+          <input type="hidden" name="next" value="{% url 'attendance:groups' %}" />
+      </form>
   </ul>
 
 

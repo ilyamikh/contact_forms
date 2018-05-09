@@ -1,0 +1,19 @@
+{% extends 'contact_form/base.html' %}
+
+{% block header %}
+<h2>{{ student }}</h2>
+{% endblock header %}
+
+{% block content %}
+
+  <p>Attendance and Meal Count:</p>
+
+      <form method="post" action="{% url 'attendance:mark_student' student.id%}">
+        {% csrf_token %}
+        {{ form.as_p }}
+          <button name="submit">Save</button>
+          <input type="hidden" name="next" value="{% url 'attendance:groups' %}" />
+      </form>
+
+
+{% endblock content %}
