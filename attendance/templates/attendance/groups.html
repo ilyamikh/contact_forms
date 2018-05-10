@@ -11,8 +11,7 @@
       {% for group in groups %}
         <li>
             <h4>{{ group }}:&nbsp
-                <a href="{% url 'attendance:group' group.id %}">Students</a>&nbsp
-                <a href="{% url 'attendance:attendance_view' group.id %}">Attendance and Meal Count</a>
+                <a href="{% url 'attendance:group' group.id %}">Students</a>
             </h4>
         </li>
       {% empty %}

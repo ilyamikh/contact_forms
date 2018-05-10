@@ -8,21 +8,18 @@
 
   <p>Students:</p>
 
-  <ul>
+      <table width="100%" border="1">
       {% for student in students %}
-        <li>
-            <p>
-                {{ student }}&nbsp
-                <a href="{% url 'contact_form:student' student.id %}">View Info</a>&nbsp
-                <a href="{% url 'attendance:mark_student' student.id %}">Mark Attendance and Meal Count</a>
-            </p>
-        </li>
+        <tr>
+            <td>{{ student }}</td>
+            <td><a href="{% url 'contact_form:student' student.id %}">View Info</a></td>
+            <td><a href="{% url 'attendance:attendance_view' student.id %}">View Attendance and Meal Count</a></td>
+            <td><a href="{% url 'attendance:mark_student' student.id %}">Mark Attendance and Meal Count</a></td>
+        </tr>
       {% empty %}
-        <li>
-            There are no children in this classroom yet.
-        </li>
+        <tr><td>There are no children in this classroom yet.</td></tr>
       {% endfor %}
-  </ul>
+      </table>
 
 
 {% endblock content %}

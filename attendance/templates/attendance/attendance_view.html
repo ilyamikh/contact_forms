@@ -1,0 +1,35 @@
+{% extends "contact_form/base.html" %}
+
+{% block header %}
+    <h1>{{ student }}</h1>
+    <h3>Attendance and Meal Count</h3>
+{% endblock header %}
+
+{% block content %}
+    <table width="100%" border="1">
+        <tr>
+            <td>DATE</td>
+            <td>ATT</td>
+            <td>BR</td>
+            <td>LU</td>
+            <td>PM</td>
+            <td>SU</td>
+            <td>EV</td>
+        </tr>
+      {% for day in days %}
+        <tr>
+            <td>{{ day.date }}</td>
+            <td>{{ day.attended }}</td>
+            <td>{{ day.breakfast }}</td>
+            <td>{{ day.lunch }}</td>
+            <td>{{ day.pm_snack }}</td>
+            <td>{{ day.supper }}</td>
+            <td>{{ day.evening_snack }}</td>
+        </tr>
+      {% empty %}
+        <tr><td>No attendance record found.</td></tr>
+      {% endfor %}
+    </table>
+
+
+{% endblock content %}

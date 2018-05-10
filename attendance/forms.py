@@ -15,7 +15,7 @@ class GroupForm(forms.ModelForm):
         }
 
 
-class GroupDayForm(forms.ModelForm):
+class StudentDayForm(forms.ModelForm):
     """Mark attendance and meals for the day on a group view"""
     class Meta:
         model = Day

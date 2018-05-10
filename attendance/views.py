@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from contact_form.models import Group, Day, Student
-from .forms import GroupForm, GroupDayForm
+from .forms import GroupForm, StudentDayForm
 
 from datetime import date
 
@@ -24,10 +24,10 @@ def mark_student(request, student_id):
     student = Student.objects.get(id=student_id)
     if request.method != 'POST':
         # No data submitted; create a blank form.
-        form = GroupDayForm(initial={'date': date.today()})
+        form = StudentDayForm(initial={'date': date.today()})
     else:
         # POST data submitted; process data.
-        form = GroupForm(data=request.POST)
+        form = StudentDayForm(data=request.POST)
         if form.is_valid():
             day = form.save(commit=False)
             day.student = student
