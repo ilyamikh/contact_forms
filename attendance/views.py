@@ -11,11 +11,18 @@ from datetime import date
 
 @login_required
 def attendance_view(request, student_id):
-    """Displays a group of students with checkboxes for attendance (hopefully)"""
+    """Shows the attendance record for a single student"""
     student = Student.objects.get(id=student_id)
     days = student.day_set.order_by('-date')
     context = {'student': student, 'days': days}
     return render(request, 'attendance/attendance_view.html', context)
+
+
+@login_required
+def group_attendance(request, group_id):
+    """Displays a group of students with checkboxes for attendance (hopefully)"""
+    group = Group.objects.get(id=group_id)
+    students = group.student_set.order_by('-last_name')
 
 
 @login_required

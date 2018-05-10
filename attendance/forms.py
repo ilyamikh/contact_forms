@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import formset_factory
 
 from contact_form.models import Student, Group, Day
 
@@ -31,3 +32,6 @@ class StudentDayForm(forms.ModelForm):
             'supper': 'SU',
             'evening_snack': 'EV',
         }
+
+
+DayFormset = formset_factory(StudentDayForm)
